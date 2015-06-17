@@ -1,0 +1,4 @@
+_input/ffmpeg*
+_output/ffmpeg*
+_output/FFmpeg
+**/.DS_Store
