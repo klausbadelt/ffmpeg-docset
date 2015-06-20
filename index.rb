@@ -1,15 +1,9 @@
-require 'nokogiri'
-require 'sqlite3'
-require 'fileutils'
+require_relative 'lib/docset'
 
-doc = Nokogiri::HTML(ARGF.read)
-db = SQLite3::Database.new( "_output/ffmpeg.docset/Contents/Resources/docSet.dsidx" )
-db.execute "CREATE TABLE IF NOT EXISTS searchIndex (id INTEGER PRIMARY KEY, name TEXT, type TEXT, path TEXT);"
-db.execute "CREATE UNIQUE INDEX IF NOT EXISTS anchor ON searchIndex (name, type, path);"
-
-doc.css("h1.chapter > a").each do |node|
-  chapter = node.content
-  type = 'Guide'
-  path = node[:href]
-  db.execute "INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES (?, ?, ?);", [chapter, type, path]
+docset = Docset.new('_output/ffmpeg.docset')
+guides = 
+Dir.glob(File.join(docset.path,"Contents/Resources/Documents/*.html")).each do |path|
+  next if path =~ /\-all.html/
+  puts "Indexing #{File.basename(path)}"
+  docset.index(path)
 end
