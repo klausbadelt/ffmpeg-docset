@@ -4,7 +4,7 @@ rm -rf _output/FFmpeg.tgz
 mkdir -p _output/ffmpeg.docset/Contents/Resources/Documents
 
 # copy into docset
-cp -rf _input/ffmpeg/doc/*.html _output/ffmpeg.docset/Contents/Resources/Documents
+# cp -rf _input/ffmpeg/doc/*.html _output/ffmpeg.docset/Contents/Resources/Documents
 cp -rf _input/ffmpeg/doc/*.css _output/ffmpeg.docset/Contents/Resources/Documents
 cp -rf _input/icon*.png _output/ffmpeg.docset
 cp -rf _input/Info.plist _output/ffmpeg.docset/Contents/Info.plist

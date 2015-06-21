@@ -1,8 +1,8 @@
 require_relative 'lib/ffmpeg_docset'
 
 docset = FfmpegDocset.new('_output/ffmpeg.docset')
-Dir.glob(File.join(docset.path,"Contents/Resources/Documents/*.html")).each do |path|
+Dir.glob("_input/ffmpeg/doc/*.html").each do |path|
   next if path =~ /\-all.html/
   puts "Indexing #{File.basename(path)}"
-  docset.index(path)
+  docset.add(path)
 end

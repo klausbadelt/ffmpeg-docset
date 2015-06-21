@@ -12,14 +12,16 @@ class FfmpegDocset
     @db.execute "CREATE UNIQUE INDEX IF NOT EXISTS anchor ON searchIndex (name, type, path);"
   end
 
-  def index(path)
-    @doc_basename = File.basename path
-    @doc = Nokogiri::HTML File.read(path)
+  def add(input_path)
+    @input_path = input_path
+    @doc_basename = File.basename @input_path
+    @doc = Nokogiri::HTML File.read(@input_path)
     @title = @doc.css('h1.settitle').first.content.sub(/\sDocumentation$/,'')
     index_node @title, doc_type, '', @doc_basename
-    index_anchors 'div.contents>ul.toc>li>a', 'Category'
-    index_anchors 'div.contents>ul.toc>li>ul.toc>li>a', 'Section'
-    # @todo: table of contents
+    index_anchors 'div.contents>ul.toc>li>a', 'Section'
+    index_anchors 'div.contents>ul.toc>li>ul.toc>li>a', 'Entry'
+    create_toc
+    write_html
   end
   
   private
@@ -52,6 +54,34 @@ class FfmpegDocset
   def dechapterize(name)
     "#{name.sub(/^\d+\.(\d+)?\s+/, '')}"
   end
+  
+  def create_toc
+    entry_type = 'Section'
+    @doc.css('h1.chapter').each do |chap|
+      a = @doc.create_element 'a'
+      entry_name = dechapterize(chap.content)
+      a['name'] = "//apple_ref/cpp/#{entry_type}/#{entry_name}"
+      a['class'] = 'dashAnchor'
+      chap.previous = a
+      puts "  Adding chapter #{entry_name}"
+    end
+    entry_type = 'Entry'
+    @doc.css('h2.section').each do |chap|
+      a = @doc.create_element 'a'
+      entry_name = dechapterize(chap.content)
+      a['name'] = "//apple_ref/cpp/#{entry_type}/#{entry_name}"
+      a['class'] = 'dashAnchor'
+      chap.previous = a
+      puts "  Adding section #{entry_name}"
+    end
+    
+  end
+  
+  def write_html
+    File.open(File.join(@path,'/Contents/Resources/Documents',@doc_basename), 'w') {|f| f.write(@doc.to_html) }
+  end
+    
+    
     
 end
   
