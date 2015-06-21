@@ -2,7 +2,7 @@ require 'nokogiri'
 require 'sqlite3'
 # require 'fileutils'
 
-class Docset
+class FfmpegDocset
   attr_reader :path
     
   def initialize(path)
@@ -16,20 +16,20 @@ class Docset
     @doc_basename = File.basename path
     @doc = Nokogiri::HTML File.read(path)
     @title = @doc.css('h1.settitle').first.content.sub(/\sDocumentation$/,'')
-    index_node @title, doc_type(@doc_basename), '', @doc_basename
+    index_node @title, doc_type, '', @doc_basename
     index_anchors 'div.contents>ul.toc>li>a', 'Category'
     index_anchors 'div.contents>ul.toc>li>ul.toc>li>a', 'Section'
-    # @todo: sections
+    # @todo: table of contents
   end
   
   private
   
-  def doc_type(basename)
-    if basename =~ /^ffmpeg-/
+  def doc_type
+    if @doc_basename =~ /^ffmpeg-/
       'Component'
-    elsif basename =~ /^ff[a-z]+\.html/
-      'Guide'
-    elsif basename =~ /^lib/
+    elsif @doc_basename =~ /^ff[a-z]+\.html/
+      'Command'
+    elsif @doc_basename =~ /^lib/
       'Library'
     else
       'Guide'
