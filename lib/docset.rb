@@ -14,9 +14,9 @@ class Docset
 
   def index(path)
     @doc_basename = File.basename path
-    @doc_html = Nokogiri::HTML File.read(path)
-    @title = @doc_html.css('h1.settitle').first.content.sub(/\sDocumentation$/,'')
-    index_node @title, 'Guide', '', @doc_basename
+    @doc = Nokogiri::HTML File.read(path)
+    @title = @doc.css('h1.settitle').first.content.sub(/\sDocumentation$/,'')
+    index_node @title, doc_type(@doc_basename), '', @doc_basename
     index_anchors 'div.contents>ul.toc>li>a', 'Category'
     index_anchors 'div.contents>ul.toc>li>ul.toc>li>a', 'Section'
     # @todo: sections
@@ -24,8 +24,20 @@ class Docset
   
   private
   
+  def doc_type(basename)
+    if basename =~ /^ffmpeg-/
+      'Component'
+    elsif basename =~ /^ff[a-z]+\.html/
+      'Guide'
+    elsif basename =~ /^lib/
+      'Library'
+    else
+      'Guide'
+    end
+  end
+  
   def index_anchors(selector,type)
-    @doc_html
+    @doc
     .css(selector)
     .reject { |n| /^\d+\.(\d+)?\s+Authors|Description|See Also/ =~ n.content }
     .each do |n|
