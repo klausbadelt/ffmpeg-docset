@@ -17,6 +17,7 @@ class FfmpegDocset
     @doc_basename = File.basename @input_path
     @doc = Nokogiri::HTML File.read(@input_path)
     @title = @doc.css('h1.settitle').first.content.sub(/\sDocumentation$/,'')
+    @doc.css('head title').first.content = @title
     index_node @title, doc_type, '', @doc_basename
     index_anchors 'div.contents>ul.toc>li>a', 'Section'
     index_anchors 'div.contents>ul.toc>li>ul.toc>li>a', 'Entry'
