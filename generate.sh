@@ -1,6 +1,6 @@
 #!/bin/bash
 rm -rf _output/ffmpeg.docset
-rm -rf _output/FFmpeg.tgz
+rm -rf _output/ffmpeg.tgz
 mkdir -p _output/ffmpeg.docset/Contents/Resources/Documents
 
 # copy into docset
