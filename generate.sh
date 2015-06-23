@@ -10,10 +10,10 @@ cp -rf _input/icon*.png _output/ffmpeg.docset
 cp -rf _input/Info.plist _output/ffmpeg.docset/Contents/Info.plist
 
 # index
-ruby index.rb _output/ffmpeg.docset
+ruby index.rb
 #find doc -name \*\.html | xargs -n 1 ruby ~/Codes/erlang.docset/src/generate.rb | sqlite3 ../docSet.dsidx
 
 # compress
-# cd _output
-# tar --exclude='*.pdf' --exclude='.DS_Store' -cvzf FFmpeg.tgz ffmpeg.docset
-# cd -
+cd _output
+tar --exclude='*.pdf' --exclude='.DS_Store' -cvzf ffmpeg.tgz ffmpeg.docset
+cd -
