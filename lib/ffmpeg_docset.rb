@@ -1,6 +1,5 @@
 require 'sqlite3'
 require_relative 'ffmpeg_doc'
-# require 'fileutils'
 
 class FfmpegDocset
   attr_reader :path

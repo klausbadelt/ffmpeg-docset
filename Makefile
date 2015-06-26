@@ -12,7 +12,7 @@ ffmpeg.docset: ffmpeg
 	cp -rf ffmpeg/doc/*.css ffmpeg.docset/Contents/Resources/Documents
 	cp -rf icon*.png ffmpeg.docset
 	cp -rf Info.plist ffmpeg.docset/Contents/Info.plist
-	ruby index.rb
+	bundle exec ruby index.rb
 
 ffmpeg: $(FFMPEG_SOURCE_TARBALL)
 	mkdir -p ffmpeg
