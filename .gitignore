@@ -1,3 +1,5 @@
-_input/ffmpeg*
-_output/ffmpeg*
+ffmpeg*
+*.tar.bz2
+ffmpeg.docset
+ffmpeg.tgz
 **/.DS_Store

@@ -1,8 +1,7 @@
 require_relative 'lib/ffmpeg_docset'
 
-docset = FfmpegDocset.new('_output/ffmpeg.docset')
-Dir.glob("_input/ffmpeg/doc/*.html").each do |path|
-  next if path =~ /\-all.html/
+docset = FfmpegDocset.new('ffmpeg.docset')
+Dir.glob("ffmpeg/doc/*.html").reject{ |p| p[/\-all.html/] }.each do |path|
   puts "Indexing #{File.basename(path)}"
   docset.add(path)
 end

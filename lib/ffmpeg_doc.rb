@@ -70,7 +70,7 @@ class FfmpegDoc
       a['name'] = "//apple_ref/cpp/#{with_type}/#{URI::escape(entry_name, URI::PATTERN::UNRESERVED+URI::PATTERN::RESERVED+'/')}"
       a['class'] = 'dashAnchor'
       chap.previous = a
-      puts "  Adding chapter #{entry_name}"
+      # puts "  Adding chapter #{entry_name}"
     end
   end
 end
