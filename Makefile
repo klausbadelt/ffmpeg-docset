@@ -3,11 +3,11 @@ FFMPEG_SOURCE_TARBALL=ffmpeg-2.7.1.tar.bz2
 # NO CHANGES BELOW THIS
 BUILD=build/
 
-all: $(BUILD)ffmpeg.tgz
+all: $(BUILD)FFmpeg.tgz
 	
-$(BUILD)ffmpeg.tgz: $(BUILD)ffmpeg.docset
-	rm -rf $(BUILD)ffmpeg.tgz
-	tar -C $(BUILD) --exclude='*.pdf' --exclude='.DS_Store' -cvzf $(BUILD)ffmpeg.tgz ffmpeg.docset
+$(BUILD)FFmpeg.tgz: $(BUILD)ffmpeg.docset
+	rm -rf $(BUILD)FFmpeg.tgz
+	tar -C $(BUILD) --exclude='*.pdf' --exclude='.DS_Store' -cvzf $(BUILD)FFmpeg.tgz ffmpeg.docset
 
 $(BUILD)ffmpeg.docset: $(BUILD)ffmpeg
 	mkdir -p $(BUILD)ffmpeg.docset/Contents/Resources/Documents
@@ -28,7 +28,7 @@ clean: local_clean
 	rm -rf $(BUILD)$(FFMPEG_SOURCE_TARBALL)
 	
 local_clean:
-	rm -rf $(BUILD)ffmpeg $(BUILD)ffmpeg.docset $(BUILD)ffmpeg.tgz
+	rm -rf $(BUILD)ffmpeg $(BUILD)ffmpeg.docset $(BUILD)FFmpeg.tgz
  
 .DELETE_ON_ERROR:
 	
