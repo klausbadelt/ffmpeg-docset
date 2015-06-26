@@ -1,30 +1,34 @@
 # CHANGE THIS TO CURRENT FFMPEG VERSION
 FFMPEG_SOURCE_TARBALL=ffmpeg-2.7.1.tar.bz2
 # NO CHANGES BELOW THIS
+BUILD=build/
 
-all: ffmpeg.tgz
+all: $(BUILD)ffmpeg.tgz
 	
-ffmpeg.tgz: ffmpeg.docset
-	tar --exclude='*.pdf' --exclude='.DS_Store' -cvzf ffmpeg.tgz ffmpeg.docset
+$(BUILD)ffmpeg.tgz: $(BUILD)ffmpeg.docset
+	rm -rf $(BUILD)ffmpeg.tgz
+	tar -C $(BUILD) --exclude='*.pdf' --exclude='.DS_Store' -cvzf $(BUILD)ffmpeg.tgz ffmpeg.docset
 
-ffmpeg.docset: ffmpeg
-	mkdir -p ffmpeg.docset/Contents/Resources/Documents
-	cp -rf ffmpeg/doc/*.css ffmpeg.docset/Contents/Resources/Documents
-	cp -rf icon*.png ffmpeg.docset
-	cp -rf Info.plist ffmpeg.docset/Contents/Info.plist
-	bundle exec ruby index.rb
+$(BUILD)ffmpeg.docset: $(BUILD)ffmpeg
+	mkdir -p $(BUILD)ffmpeg.docset/Contents/Resources/Documents
+	cp -rf $(BUILD)ffmpeg/doc/*.css $(BUILD)ffmpeg.docset/Contents/Resources/Documents
+	cp -rf icon*.png $(BUILD)ffmpeg.docset
+	cp -rf Info.plist $(BUILD)ffmpeg.docset/Contents/Info.plist
+	bundle exec ruby index.rb $(BUILD)
 
-ffmpeg: $(FFMPEG_SOURCE_TARBALL)
-	mkdir -p ffmpeg
-	tar xf $(FFMPEG_SOURCE_TARBALL) --strip-components=1 -C ffmpeg
-	cd ffmpeg && ./configure && make doc
+$(BUILD)ffmpeg: $(BUILD)$(FFMPEG_SOURCE_TARBALL)
+	mkdir -p $(BUILD)ffmpeg
+	tar xf $(BUILD)$(FFMPEG_SOURCE_TARBALL) --strip-components=1 -C $(BUILD)ffmpeg
+	cd $(BUILD)ffmpeg && ./configure && make doc
 	
-$(FFMPEG_SOURCE_TARBALL): 
-	wget -O $(FFMPEG_SOURCE_TARBALL) http://ffmpeg.org/releases/$(FFMPEG_SOURCE_TARBALL)
+$(BUILD)$(FFMPEG_SOURCE_TARBALL): 
+	wget -O $(BUILD)$(FFMPEG_SOURCE_TARBALL) http://ffmpeg.org/releases/$(FFMPEG_SOURCE_TARBALL)
 	
-clean: clean_local
-	rm -rf $(FFMPEG_SOURCE_TARBALL)
+clean: local_clean
+	rm -rf $(BUILD)$(FFMPEG_SOURCE_TARBALL)
 	
-clean_local:
-	rm -rf ffmpeg ffmpeg.docset ffmpeg.tgz
-  
+local_clean:
+	rm -rf $(BUILD)ffmpeg $(BUILD)ffmpeg.docset $(BUILD)ffmpeg.tgz
+ 
+.DELETE_ON_ERROR:
+	
