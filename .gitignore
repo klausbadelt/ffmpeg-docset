@@ -1,5 +1,2 @@
-ffmpeg*
-*.tar.bz2
-ffmpeg.docset
-ffmpeg.tgz
+build/*
 **/.DS_Store
