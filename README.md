@@ -6,7 +6,12 @@ It is submitted also as a [User Contributed docset](https://github.com/Kapeli/Da
 
 ## Install
 
-Requires Ruby 2.2+, Bundler, make. Tested only on OS X.
+Requires Ruby 2.2+, Bundler, make. Needs `texi2html` on Ubuntu:
+```
+sudo apt-get install texi2html
+```
+
+Then:
 
 ```
 bundle install
