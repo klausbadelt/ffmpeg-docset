@@ -1,5 +1,5 @@
 # CHANGE THIS TO CURRENT FFMPEG VERSION
-FFMPEG_SOURCE_TARBALL=ffmpeg-3.0.2.tar.bz2
+FFMPEG_SOURCE_TARBALL=ffmpeg-3.1.2.tar.bz2
 # NO CHANGES BELOW THIS
 BUILD=build/
 
@@ -22,6 +22,7 @@ $(BUILD)ffmpeg: $(BUILD)$(FFMPEG_SOURCE_TARBALL)
 	cd $(BUILD)ffmpeg && ./configure  --disable-yasm && make doc
 	
 $(BUILD)$(FFMPEG_SOURCE_TARBALL): 
+	mkdir -p $(BUILD)
 	wget -O $(BUILD)$(FFMPEG_SOURCE_TARBALL) http://ffmpeg.org/releases/$(FFMPEG_SOURCE_TARBALL)
 	
 clean: local_clean
