@@ -35,7 +35,7 @@ class FfmpegDoc
   end
 
   def title
-    @title ||= @html.css('h1.settitle').first.content.sub(/\sDocumentation$/,'')
+    @title ||= @html.css('h1.titlefont').first.content.sub(/\sDocumentation$/,'')
   end
 
   private
