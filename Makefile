@@ -28,8 +28,8 @@ $(BUILD)/$(FFMPEG_SOURCE_TARBALL):
 distclean: clean
 	rm -rf $(BUILD)
 
-clean:
-	rm -rf $(BUILD)/$(FFMPEG_SOURCE_TARBALL)
+clean: 
+	rm -rf $(BUILD)/FFmpeg.tgz $(BUILD)/ffmpeg.docset
 	 
 .DELETE_ON_ERROR:
 	
